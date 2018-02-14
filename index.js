@@ -25,7 +25,7 @@ app.get('/send', function (req, res) {
     subject: req.query.subject,
     text: req.query.text
   }
-  console.log("mailOptions- ---", mailOptions);
+  
   emailTransport.sendMail(mailOptions, function (error, response) {
     console.log("response", response);
     if (error) {
@@ -35,7 +35,7 @@ app.get('/send', function (req, res) {
       client.messages.create({
         to: "+919649219525 ",
         from: "(424) 353-2273",
-        body: "This is the ship that made the Kessel Run in fourteen parsecs?",
+        body: "This is the first demo E-mail.",
       }, function (err, message) {
         console.log(message.sid);
       });
