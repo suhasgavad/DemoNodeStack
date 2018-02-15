@@ -1,7 +1,7 @@
 var EmailService = require('nodemailer');
 var ExpressService = require('express');
-var accountSid = 'ACcc1515053bc1e4a332ec646aea76c152';
-var authToken = '7cd84a9868c2e069e0690d4376bc07ea';
+var accountSid = 'fsadfsdf';
+var authToken = 'sdfsdf';
 
 var client = require('twilio')(accountSid, authToken);
 var app = ExpressService();
@@ -10,8 +10,8 @@ var emailTransport = EmailService.createTransport({
   service: "gmail",
   host: "smtp.gmail.com",
   auth: {
-    user: "jiteshpowankar@gmail.com",
-    pass: "jitya@23"
+    user: "adsfsdaf",
+    pass: "asdfsdf"
   }
 });
 
@@ -25,7 +25,7 @@ app.get('/send', function (req, res) {
     subject: req.query.subject,
     text: req.query.text
   }
-  
+
   emailTransport.sendMail(mailOptions, function (error, response) {
     console.log("response", response);
     if (error) {
@@ -33,8 +33,8 @@ app.get('/send', function (req, res) {
       res.end("error");
     } else {
       client.messages.create({
-        to: "+919649219525 ",
-        from: "(424) 353-2273",
+        to: "+9145545454 ",
+        from: "545555",
         body: "This is the first demo E-mail.",
       }, function (err, message) {
         console.log(message.sid);
