@@ -1,0 +1,64 @@
+D:\Project 2018\POC\spend-analyser\src\App\Components\Section\Section.scss
+line 2--- margin-top: 25px;
+
+import React, { Component } from 'react'
+import { Row, Col } from 'react-bootstrap'
+
+import { getComplaintsData } from './service'
+import Section from '../../Components/Section'
+import Search from '../../Components/Search'
+
+class Complaints extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: []
+        }
+        this.onComplaintsSearch = this.onComplaintsSearch.bind(this)
+    }
+    componentDidMount() {
+        getComplaintsData().then(respose => {
+            this.setState({
+                data: respose
+            })
+        }).catch(err => {
+            this.setState({
+                error: true
+            })
+        })
+    }
+    onComplaintsSearch(value) {
+        this.props.getComplaintsData(value)
+    }
+
+
+    render() {
+        const { data } = this.state
+        const oprId = data.length > 0 ? data[0].oprId : ''
+        return (
+            <Section header="Complaints"
+            subHeader={() => <Search
+                value={oprId}
+                placeHolder={"Enter the complaint id"}
+                onSearch={this.onComplaintsSearch}
+            />}>
+            <Row className={"opportunities"}>
+                {data.map((item, index) => 
+                     <Col sm={6} md={3} key={`opportunities-widget-${index}`}>
+                        <div className="opportunit-widget">
+                            <div className="opportunity-name"><h4>{item.SrNumber}</h4></div>
+                            <div className="product-type">{item.Title}</div>
+                            <div className="product-desc">{item.LastUpdateDate}</div>
+                            <div className="product-desc">{item.Brand_C}</div>                            
+                            <div className="product-desc">{item.ChannelTypeCd}</div>
+                            <div className="opportunity-assigned"><sub>{(item.AssigneePersonName || '')}</sub></div>
+                        </div>
+                    </Col> 
+                )}
+            </Row>
+        </Section >
+        )
+    }
+}
+
+export default Complaints;
